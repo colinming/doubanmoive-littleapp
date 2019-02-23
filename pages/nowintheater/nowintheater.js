@@ -60,6 +60,11 @@ Page({
   	this.initData(this.data.start, this.data.count)
 	},
 	onShow(){
+		this.setData({
+			start: 0,
+			nowPage: 1,
+			hotMovieList: []
+		})
 		this.initData(this.data.start, this.data.count)
 	}
 })

@@ -3,7 +3,7 @@
 	<view class="hot-title">影院热映</view>
 	<view class="list-main">
 		<block wx:for="{{hotMovieList}}" wx:key="{{index}}">
-			<navigator class="single-li" url="../moviedetail/moviedetail"
+			<navigator class="single-li" url="../moviedetail/moviedetail?id={{ item.id }}"
 				hover-class="none">
 				<image src="{{item.cover.url}}"></image>
 				<view class="title">{{item.title}}</view>
