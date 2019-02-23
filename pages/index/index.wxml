@@ -5,7 +5,7 @@
       <view class="list-wrapper">
         <view class="list-header">
           <view class="title">影院热映</view>
-          <navigator url="/pages/nowintheater" class="read-more"
+          <navigator url="../nowintheater/nowintheater" class="read-more"
             hover-class="navigator-hover"
           >更多</navigator>
         </view>
@@ -26,7 +26,7 @@
       <view class="list-wrapper">
         <view class="list-header">
           <view class="title">免费在线电影</view>
-          <navigator url="/pages/watchonline" class="read-more"
+          <navigator url="../watchonline/watchonline" class="read-more"
             hover-class="navigator-hover"
           >更多</navigator>
         </view>
@@ -45,7 +45,7 @@
       <view class="list-wrapper">
         <view class="list-header">
           <view class="title">新片速递</view>
-          <navigator url="/pages/latest" class="read-more"
+          <navigator url="../latest/latest" class="read-more"
             hover-class="navigator-hover"
           >更多</navigator>
         </view>

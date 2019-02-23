@@ -1,10 +1,11 @@
 {
 	"navigationBarBackgroundColor": "#ffffff",
   "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "首页",
+  "navigationBarTitleText": "影院热映",
   "backgroundColor": "#eeeeee",
   "backgroundTextStyle": "light",
   "usingComponents": {
     "search": "../../components/search/search"
-  }
+  },
+  "enablePullDownRefresh": true
 }
