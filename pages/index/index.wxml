@@ -1,0 +1,89 @@
+<!--index.wxml-->
+<view class="index-wrapper">
+    <search></search>
+    <view class="index-container">
+      <view class="list-wrapper">
+        <view class="list-header">
+          <view class="title">影院热映</view>
+          <navigator url="/pages/nowintheater" class="read-more"
+            hover-class="navigator-hover"
+          >更多</navigator>
+        </view>
+        <scroll-view class="list-main" scroll-x style="width: 100%">
+          <block wx:for="{{ hotMovies.subject_collection_items }}" wx:key="index" item="item">
+            <view class="single-li">
+              <view class="li-main" bindtap="movieDetail"
+                data-id="{{item.id}}"
+              >
+                <image src="{{ item.cover.url }}"></image>
+                <view class="li-des">{{ item.title }}</view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+
+      <view class="list-wrapper">
+        <view class="list-header">
+          <view class="title">免费在线电影</view>
+          <navigator url="/pages/watchonline" class="read-more"
+            hover-class="navigator-hover"
+          >更多</navigator>
+        </view>
+        <scroll-view class="list-main" scroll-x style="width: 100%">
+          <block wx:for="{{ freeMovies.subject_collection_items }}" wx:key="index" item="item">
+            <view class="single-li">
+              <view class="li-main" bindtap="movieDetail" data-id="{{item.id}}">
+                <image src="{{ item.cover.url }}"></image>
+                <view class="li-des">{{ item.title }}</view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+
+      <view class="list-wrapper">
+        <view class="list-header">
+          <view class="title">新片速递</view>
+          <navigator url="/pages/latest" class="read-more"
+            hover-class="navigator-hover"
+          >更多</navigator>
+        </view>
+        <scroll-view class="list-main" scroll-x style="width: 100%">
+          <block wx:for="{{ recentHots.subject_collection_items }}" wx:key="index" item="item">
+            <view class="single-li">
+              <view class="li-main" bindtap="movieDetail" data-id="{{item.id}}">
+                <image src="{{ item.cover.url }}"></image>
+                <view class="li-des">{{ item.title }}</view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+    </view>
+    
+    <view class="types">
+      <view class="types-header">分类浏览</view>
+      <view class="types-main">
+        <block wx:for="{{types}}" wx:key="index">
+            <view class="type-name" bindtap="selectType" 
+              data-show-arrow="{{item.showArrow}}" data-index="{{index}}">
+              {{ item.name }}
+              <image src="../static/images/arrow-right.png" class="{{item.showArrow === true?'arrow-right':''}}"></image>
+            </view>
+        </block>
+      </view>
+    </view>
+    
+    <!-- 弹窗 -->
+    <view class="{{modalFlag === false?'modal-hide':'auth-cover'}}">
+      <view class="auth-modal">
+        <view class="auth-content">
+          <i class="close-ico"></i>
+          <view>初次获取用户授权描述</view>
+        </view>
+        <button class="auth-btn" bindtap="getAuth">授权信息</button>
+      </view>
+    </view>
+
+  </view> 
