@@ -30,7 +30,7 @@ Page({
 				start: 0
 			},
 			success(res){
-				console.log(res.data)
+				// console.log(res.data)
 				This.setData({
 					comments: res.data
 				})

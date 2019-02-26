@@ -1,7 +1,7 @@
 {
 	"navigationBarBackgroundColor": "#ffffff",
   "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "首页",
+  "navigationBarTitleText": "豆瓣电影首页",
   "backgroundColor": "#eeeeee",
   "backgroundTextStyle": "light",
   "usingComponents": {

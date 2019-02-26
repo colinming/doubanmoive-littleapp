@@ -1,0 +1,6 @@
+<!--index.wxml-->
+<view class="music-index">
+  <text>网易云音乐</text>
+</view> 
+
+<navigator url="../index/index" class="change-btn">切换到豆瓣电影</navigator>

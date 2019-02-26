@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/musicindex/musicindex",
     "pages/index/index",
     "pages/nowintheater/nowintheater",
     "pages/watchonline/watchonline",

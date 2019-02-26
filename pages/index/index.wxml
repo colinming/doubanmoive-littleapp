@@ -87,3 +87,5 @@
     </view>
 
   </view> 
+
+  <navigator url="../musicindex/musicindex" class="change-btn">切换到网易云音乐</navigator>
