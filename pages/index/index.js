@@ -57,7 +57,10 @@ Page({
     
   },  
   movieDetail(e){ // 跳转电影详情页
-    console.log(e.currentTarget.dataset)
+    wx.navigateTo({
+      url: `../moviedetail/moviedetail?id=${e.currentTarget.dataset.id}`
+    })
+    // console.log(e.currentTarget.dataset)
   },
   getAuth(e){ // 用户授权
     console.log(e)

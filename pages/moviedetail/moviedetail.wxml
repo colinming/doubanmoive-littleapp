@@ -1,3 +1,57 @@
+<import src="../wxParse/wxParse/wxParse.wxml"/>
 <view class="movie-detail">
-	<text>电影详情</text>
+	<text class="movie-title">{{ movieDetail.title }}</text>
+	<view class="movie-content">
+		<view class="movie-des">{{movieDetail.extra.short_info}}</view>
+		<image src="{{ movieDetail.cover_img.url }}" class="movie-cover"></image>
+	</view>
+	<view class="tags">
+		<view class="tag-title">所属频道</view>
+		<view class="tag-wrapper">
+			<block>
+				<view class="tag" wx:for="{{movieDetail.tags}}" wx:key="{{index}}">
+					<text class="tag-words">{{item.name}}</text>
+					<image class="arrow-right" src="../static/images/tag-arrow.png"></image>
+				</view>
+			</block>
+		</view>
+	</view>
+	<!-- <view class="story">
+		<text class="story-title">{{movieDetail.title}}的剧情介绍</text>
+		<view class="story-words">
+			<template class="story-ellipsis" is="wxParse" data="{{wxParseData: storyEllipsis.nodes}}"/>
+			<button bindtap="expendWords">(展开)</button>
+		</view>
+	</view> -->
+	<view class="actors">
+		<text class="actor-title">影人</text>
+		<scroll-view scroll-x="true" width="100%" class="actor-scroll">
+			<view wx:for="{{actors}}" wx:key="{{index}}" class="actor-wrapper">
+				<view wx:for="{{item.celebrities}}" wx:key="{{index}}" class="actor-content" wx:for-item="subItem">
+					<image src="{{subItem.cover_url}}" class="actor-img"></image>
+					<text class="actor-name">{{subItem.name}}</text><text class="actor-operator">{{item.title}}</text>
+				</view>
+			</view>
+		</scroll-view>
+	</view>
+
+	<view class="comments"> 
+		<text class="comments-title">{{movieDetail.title}}的短评({{comments.total}})</text>
+		<block>
+			<view wx:for="{{comments.interests}}" wx:key="{{index}}" class="comment-content">
+				<view class="comment-user">
+					<image class="user-avtar" src="{{item.user.avatar}}"></image>
+					<view class="user-name">
+						<text class="name">{{item.user.name}}</text>
+						<text class="time">{{item.create_time}}</text>
+					</view>
+				</view>
+				<view class="comment-des">{{item.comment}}</view>
+				<view class="comment-edit">
+					<text class="num">{{item.vote_count}}</text>
+				</view>
+			</view>
+		</block>
+		<button class="more-comment" ><text bindtap="moreComment">加载更多</text></button>
+	</view>
 </view>
