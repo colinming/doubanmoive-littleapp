@@ -23,6 +23,7 @@
 			<button bindtap="expendWords">(展开)</button>
 		</view>
 	</view> -->
+
 	<view class="actors">
 		<text class="actor-title">影人</text>
 		<scroll-view scroll-x="true" width="100%" class="actor-scroll">

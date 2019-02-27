@@ -1,4 +1,4 @@
-let baseUrl = 'https://music.163.com/weapi/'
+let baseUrl = 'http://localhost:3000'
 const http = function(method, url, data) {
   return new Promise(function(resolve, reject) {
     wx.request({
@@ -19,7 +19,22 @@ const http = function(method, url, data) {
   })
 }
 export default {
-	newSong(){
-		return http('post', 'personalized/newsong')
+	songTypes(limit){ // 精品歌单
+		return http('get', '/top/playlist/highquality', {limit})
+	},
+	songList(id){ // 歌单详情
+		return http('get', '/playlist/detail', {id})
+	},
+	songUrl(id){ // 歌曲 url
+		return http('get', '/song/url', {id})
+	},
+	songLrc(id){ // 歌词
+		return http('get', '/lyric', {id})
+	},
+	songDetail(ids){ // 歌曲详情
+		return http('get', '/song/detail', {ids})
+	},
+	songComments(id){ // 歌曲评论
+		return http('get', '/comment/music', {id})
 	}
 }

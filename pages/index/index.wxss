@@ -24,11 +24,6 @@
   display: flex;
   white-space: nowrap;
 }
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  color: transparent;
-}
 .single-li{
   width: 200rpx;
   display: inline-block;

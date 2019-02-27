@@ -1,6 +1,35 @@
 <!--index.wxml-->
 <view class="music-index">
-  <text>网易云音乐</text>
+  <view class="tab-header">
+    <view wx:for="{{tabbar}}" wx:key="{{index}}" class="tab-title">
+      <text class="tab-words {{currentIndex === index?'is-active':''}}" bindtap="selectType" data-index="{{index}}">{{item.title}}</text>
+    </view>
+  </view>
+
+  <swiper current="{{currentIndex}}" duration="300" bindchange="changeContent" class="tab-content"
+  style="height: {{clientHeight?clientHeight+'rpx':'auto'}}">
+    <swiper-item class="songs">
+      <scroll-view scroll-y="{{true}}" style="height: {{clientHeight?clientHeight+'rpx':'auto'}}" bindscrolltolower="scrollbot">
+        <text class="songs-title">精品歌单</text>
+        <view class="songs-wrapper">
+          <block>
+            <view wx:for="{{songsTypes}}" wx:key="{{index}}" class="songs-detail">
+              <navigator url="../musiclist/musiclist?id={{item.id}}" class="songs-link">
+                <image src="{{item.coverImgUrl}}" class="songs-cover"></image>
+                <text class="songs-des">{{item.name}}</text>
+              </navigator>
+            </view>
+          </block>
+        </view>
+      </scroll-view>
+    </swiper-item> 
+    <swiper-item class="mvs">
+      mv
+    </swiper-item>
+    <swiper-item class="search">
+      搜索
+    </swiper-item>
+  </swiper>
 </view> 
 
 <navigator url="../index/index" class="change-btn">切换到豆瓣电影</navigator>

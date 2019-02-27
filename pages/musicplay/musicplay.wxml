@@ -1,0 +1,23 @@
+<!--index.wxml-->
+<view class="music-play">
+  <view class="song-header">
+    <text class="play-name">{{songDetail.name}} - {{songDetail.ar[0].name}}</text>
+  </view>
+  <image class="song-cover" src="{{songDetail.al.picUrl}}" mode="scaleToFill"></image>
+
+  <view class="play-tools">
+    <slider min="0" max="{{duration}}" step="1" block-size="15" style="margin-bottom: 0"></slider>
+    <view class="time-range">
+      <text class="now">00:00</text>
+      <text class="duration">03:12</text>
+    </view>
+    <view class="play-operate">
+      <view class="play-contrl">
+        <image class="play-ico" src="../static/images/pre-song.png" mode="scaleToFill"></image>
+        <image class="play-ico" src="../static/images/play2.png" mode="scaleToFill"></image>
+        <image class="play-ico" src="../static/images/next-song.png" mode="scaleToFill"></image>
+      </view>
+      <image class="play-list" src="../static/images/play-list.png" mode="scaleToFill"></image>
+    </view>
+  </view>
+</view> 

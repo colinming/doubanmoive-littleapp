@@ -1,11 +1,13 @@
 {
   "pages":[
+    "pages/musicplay/musicplay",
     "pages/musicindex/musicindex",
     "pages/index/index",
     "pages/nowintheater/nowintheater",
     "pages/watchonline/watchonline",
     "pages/latest/latest",
-    "pages/moviedetail/moviedetail"
+    "pages/moviedetail/moviedetail",
+    "pages/musiclist/musiclist"
   ],
   "window":{
     "backgroundTextStyle":"light",
