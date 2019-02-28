@@ -19,7 +19,7 @@
  	<view class="list-wrapper">
  		<view class="song-title">歌曲列表</view>
  		<view wx:for="{{songList.tracks}}" wx:key="{{index}}">
- 			<navigator url="../musicplay/musicplay?id={{item.id}}" open-type="navigate" class="list-content">
+ 			<navigator url="../musicplay/musicplay?index={{index}}" open-type="navigate" class="list-content">
  				<view class="song-detail">
 	 				<text class="song-name">{{item.name}}</text>
 	 				<text class="song-art">{{item.ar[0].name}}</text>
@@ -27,7 +27,7 @@
 	 			<image class="play-ico" src="../static/images/play.png" mode="scaleToFill"></image>
  			</navigator>
  		</view>
- 		<button class="play-all" bindtap="playAll">播放全部</button>
+ 		<navigator class="play-all" url="../musicplay/musicplay?index=0" open-type="navigate">播放全部</navigator>
  	</view>
 </view> 
 

@@ -14,6 +14,7 @@ Page({
     	this.setData({
     		songList: res.data.playlist
     	})
+      app.globalData.songList = res.data.playlist.tracks
     })
   },
   playAll(){ // 点击播放全部按钮

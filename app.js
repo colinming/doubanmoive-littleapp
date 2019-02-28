@@ -36,6 +36,7 @@ App({
   globalData: {
     userInfo: null,
 
-    song: null
-  }
+    song: null,
+    songList: [] // 歌曲列表
+  } 
 })

@@ -1,23 +1,82 @@
-<!--index.wxml-->
+<wxs module="m">
+  var formatS = function(time){
+    var m = 0, s = 0
+    m = time/60>9?parseInt(time/60):'0' + parseInt(time/60)
+    s = time%60>9?parseInt(time%60):'0' + parseInt(time%60)
+    
+    return m+':'+s
+  }
+  var formatMs = function(time){
+    var t = time/1000, m = 0, s = 0
+    m = t/60>9?parseInt(t/60):'0' + parseInt(t/60)
+    s = t%60>9?parseInt(t%60):'0' + parseInt(t%60)
+    
+    return m+':'+s
+  }
+  module.exports.formatS = formatS;
+  module.exports.formatMs = formatMs;
+</wxs>
+
 <view class="music-play">
   <view class="song-header">
     <text class="play-name">{{songDetail.name}} - {{songDetail.ar[0].name}}</text>
   </view>
-  <image class="song-cover" src="{{songDetail.al.picUrl}}" mode="scaleToFill"></image>
+  <image class="song-cover {{ifPlay === true?'song-rotate':''}}" src="{{songDetail.al.picUrl}}" mode="scaleToFill"></image>
 
+  <!-- 歌词显示区域 -->
+  <scroll-view class="lrc-wrapper" scroll-y scroll-into-view="{{currentLrc}}" scroll-with-animation="true">
+    <view id="el-{{index}}" class="lrc-detail" wx:for="{{songLrc}}" wx:key="{{index}}">{{songLrc[index]}}</view>
+  </scroll-view>
+
+  <!-- 播放控制条 -->
   <view class="play-tools">
-    <slider min="0" max="{{duration}}" step="1" block-size="15" style="margin-bottom: 0"></slider>
+    <slider value="{{currentTime}}" min="0" max="{{duration}}" step="1" block-size="15" style="margin-bottom: 0" bindchanging="timeChange" bindchange="change"></slider>
     <view class="time-range">
-      <text class="now">00:00</text>
-      <text class="duration">03:12</text>
+      <text class="now">{{m.formatS(currentTime)}}</text>
+      <text class="duration">{{m.formatS(duration)}}</text>
     </view>
     <view class="play-operate">
+      <image class="play-order" src="../static/images/order.png" mode="scaleToFill" bindtap="orderTap"></image>
       <view class="play-contrl">
-        <image class="play-ico" src="../static/images/pre-song.png" mode="scaleToFill"></image>
-        <image class="play-ico" src="../static/images/play2.png" mode="scaleToFill"></image>
-        <image class="play-ico" src="../static/images/next-song.png" mode="scaleToFill"></image>
+        <image class="play-ico" src="../static/images/pre-song.png" mode="scaleToFill" bindtap="preSong"></image>
+        <image class="play-ico" wx:if="{{ifPlay === true}}" src="../static/images/pause.png" mode="scaleToFill" bindtap="pauseSong"></image>
+        <image class="play-ico" wx:else src="../static/images/play2.png" mode="scaleToFill" bindtap="playSong"></image>
+        <image class="play-ico" src="../static/images/next-song.png" mode="scaleToFill" bindtap="nextSong"></image>
       </view>
-      <image class="play-list" src="../static/images/play-list.png" mode="scaleToFill"></image>
+      <image class="play-list" src="../static/images/play-list.png" mode="scaleToFill" bindtap="showList"
+      ></image>
     </view>
   </view>
+
+
+
+  <modal hidden="true" title="播放顺序">
+    <view class="">
+      <image class="" src="../static/images/order.png" mode="scaleToFill"></image>
+    </view>
+  </modal> 
+
+  <action-sheet hidden="{{!listShow}}">
+    <view class="list-wrapper">
+      <view class="list-header">
+        头部
+      </view>
+      <scroll-view class="list-content" scroll-y="true">
+        <block wx:for="{{songList}}" wx:key="{{index}}">
+          <view class="song-wrapper" bind:tap="selectSong" data-current-index="{{index}}">
+            <view class="song-left">
+              <text class="song-num" wx:if="{{currentIndex !== index}}">{{index+1}}</text>
+              <image class="min-cover" wx:else src="{{item.al.picUrl}}"></image>
+              <view class="song-detail {{currentIndex === index?'current-song':''}}">
+                <text class="song-name">{{item.name}}</text>
+                <text class="song-art">{{item.ar[0].name}}</text>
+              </view>
+            </view>
+            <text class="song-time">{{m.formatMs(item.dt)}}</text>
+          </view>
+        </block>
+      </scroll-view>
+      <button class="list-footer" bind:tap="closeList">关闭</button>
+    </view>
+  </action-sheet>
 </view> 
