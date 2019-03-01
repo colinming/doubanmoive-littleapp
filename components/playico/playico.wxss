@@ -1,0 +1,24 @@
+.play-ico{
+		display: none;
+}
+.play-ico-show{
+	display: block;
+	position: fixed;
+	top: 12rpx;
+	right: 12rpx;
+	z-index: 9999;
+
+}
+.disk-ico{
+	width: 60rpx;
+	height: 60rpx;
+	animation: diskRotate 3s infinite linear;
+}
+@keyframes diskRotate{
+	from{
+    transform: rotateZ(0);
+	}
+	to{
+    transform: rotateZ(360deg);
+	}
+}

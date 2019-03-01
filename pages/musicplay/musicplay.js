@@ -17,32 +17,44 @@ Page({
     currentTime: 0,
     isDown: false,
 
-    listShow: false
+    listShow: false,
+    orderShow: false,
+    orders: [
+      '../static/images/order.png',
+      '../static/images/single-recycle.png',
+      '../static/images/random.png'
+    ],
+    orderIndex: 0, // 默认列表循环
+    orderTitle: '顺序播放'
   },
   initData(id){ // 初始化数据
-    http.songUrl(id) // 歌曲 url
+    http.songDetail(id)
     .then(res => {
       // console.log(res)
-      let {url} = res.data.data[0]
+      let {data} = res.data
+      this.setData({
+        songDetail: data
+      })
+
+
+      let {url} = data
       this.setData({
         songUrl: url
       })
 
       this.play(url) // 播放歌曲
-
     })
 
     http.songLrc(id)
     .then(res => {
-      // console.log(res)
-      if(res.data.nolyric){ // 无歌词
+      if(!res.data){ // 无歌词
 
       }else{
-        let {lyric} = res.data.lrc, 
+        let lrc = res.data, 
             reg = /\[(.*?)](.*)/g,
             obj = {}
         
-        lyric.replace(reg, ($0, $1, $2) => {
+        lrc.replace(reg, ($0, $1, $2) => {
           obj[$1.substring(0, 5)] = $2
         })
         
@@ -50,14 +62,6 @@ Page({
           songLrc: obj
         })
       }
-    })
-
-    http.songDetail(id)
-    .then(res => {
-      // console.log(res)
-      this.setData({
-        songDetail: res.data.songs[0]
-      })
     })
 
   },
@@ -79,7 +83,7 @@ Page({
       }
 
       // 自动切换下一首
-      if(Math.floor(song.duration) === Math.floor(song.currentTime)){
+      if(Math.floor(song.duration) === Math.floor(song.currentTime)&&this.data.orderIndex === 0){
         this.nextSong()
       }
 
@@ -109,8 +113,55 @@ Page({
     })
     app.globalData.song.seek(e.detail.value)
   },
-  orderTap(){ // 播放顺序
-    console.log('播放顺序')
+  orderTap(){ // 播放顺序弹窗
+    switch (this.data.orderShow) {
+      case false:
+        this.setData({
+          orderShow: true
+        })
+        break
+      case true:
+        this.setData({
+          orderShow: false
+        })
+        break
+    }
+  },
+  selectOrder(e){ // 选择播放顺序
+    let {orderIndex} = e.target.dataset 
+    app.globalData.song.onEnded(e=>{
+      
+      switch (orderIndex) {
+        case 0: // 顺序播放
+          this.nextSong()
+          this.setData({
+            orderTitle: '顺序播放'
+          })
+          break
+        case 1: // 单曲循环
+          this.setData({
+            orderTitle: '单曲循环'
+          })
+          this.play()
+          break
+        case 2: // 随机播放
+          let {songList} = app.globalData
+          let currentIndex = parseInt(Math.random()*songList.length-1)
+          this.initData(songList[currentIndex].id)
+          
+          this.setData({
+            currentIndex,
+            orderTitle: '随机播放'
+          })
+          
+          break
+      }
+    })
+    
+    this.setData({
+      orderIndex,
+      orderShow: false
+    })
   },
   preSong(){ // 上一首
     let {currentIndex} = this.data
@@ -124,7 +175,9 @@ Page({
     let {songList} = app.globalData
     this.initData(songList[currentIndex].id)
    
-    this.playSong()
+    this.setData({
+      ifPlay: true 
+    })
   },
   pauseSong(){ // 暂停歌曲
     this.setData({
@@ -132,7 +185,7 @@ Page({
     })
     app.globalData.song.pause()
   },
-  playSong(){ // 播放歌曲
+  playSong(){ // 点击播放按钮
     this.setData({
       ifPlay: true 
     })
@@ -150,12 +203,15 @@ Page({
     let {songList} = app.globalData
     this.initData(songList[currentIndex].id)
    
-    this.playSong()
+    this.setData({ // 改变播放按钮状态
+      ifPlay: true 
+    })
     
   },
   showList(){ // 展示歌单列表
     this.setData({
-      listShow: true
+      listShow: true,
+      orderShow: false
     })
   },
   closeList(){ // 隐藏歌单列表
@@ -174,25 +230,87 @@ Page({
     this.closeList()
   },
   onLoad(opt) {
-    // this.setData({
-    //   currentIndex: Number(opt.currentIndex)
-    // })  
+    console.log('onLoad')
+    app.globalData.diskShow = false    
+    this.setData({
+      currentIndex: Number(opt.currentIndex),
+      songList: app.globalData.songList
+    })
+    this.initData(app.globalData.songList[this.data.currentIndex].id) 
+    
   },
   onShow(){
+    console.log('onShow')
+    if(!app.globalData.diskShow){ //回到页面，再次获取 currentTime, duration
+      this.play()
+    }
     
-    http.songList(988690134)
-    .then(res => {
-      this.setData({
-        songList: res.data.playlist.tracks
-      })
-      app.globalData.songList = res.data.playlist.tracks
-      this.setData({
-        currentIndex: 1
-      })
-      this.initData(app.globalData.songList[this.data.currentIndex].id)      
-   
-    })
+    let params = {
+      data: {
+        comm: {"ct":24},
+        mv_list: {
+          module: "MvService.MvInfoProServer",
+          method: "GetAllocMvInfo",
+          param: {
+            start: 0,
+            size: 20,
+            version_id: 7, // 版本
+            area_id: 16, // 区域
+            order: 1 // 0 最热 1 最新
+          }
+        }
+      }
+    }
+    // http.mvList(params)
+    // .then(res => { // 需要得到 vid
+    //   console.log(res.data)
+    // })
 
-    // this.initData(app.globalData.songList[this.data.currentIndex].id)    
+
+    let detailParams = {
+      data: {
+        getMvInfo: { 
+          module: "video.VideoDataServer",
+          method: "get_video_info_batch",
+          param: { 
+            vidlist: ["y0027sobcrh"], // 动态参数
+            required: ["vid","type","sid","cover_pic","duration","singers","video_switch","msg","name","desc","playcnt","pubdate","isfav","fileid","filesize","pay","pay_info","uploader_headurl","uploader_nick","uploader_uin","uploader_encuin"]
+          }
+        }
+      }
+    } 
+    // http.mvDetail(detailParams)
+    // .then(res => {
+    //   console.log(res.data)
+    // })
+
+    let urlParams = {
+      data: {
+        getMvUrl: {
+          module: "gosrf.Stream.MvUrlProxy",
+          method: "GetMvUrls",
+          param: {
+            vids: ["y0027sobcrh"], // 动态参数
+            request_typet: 10001
+          }
+        }
+      }
+    }
+    // http.mvUrl(urlParams)
+    // .then(res => {
+    //   console.log(res.data.getMvUrl)
+    //   // 取 freeflow_url 地址直接播放
+    // })
+
+
+    
+
+  },
+  onHide(){
+    console.log('onHide')
+  },
+  onUnload(){ // 页面卸载时触发
+    app.globalData.currentIndex = this.data.currentIndex
+    app.globalData.diskShow = true
   }
 })

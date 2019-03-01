@@ -5,6 +5,8 @@ import http from '../../utils/api'
 import utils from '../../utils/util'
 Page({
   data: {
+    diskShow: false,
+
     tabbar: [
       {title: '歌曲'},
       {title: 'mv'},
@@ -15,11 +17,11 @@ Page({
     clientHeight: 0
   },
   initData(){ // 初始化数据
-    http.songTypes(6)
+    http.songTypes(24)
     .then(res => {
-      // console.log(res)
+      // console.log(res.data)
       if(res.data.code === 200){
-        let {playlists} = res.data
+        let {playlists} = res.data.data
         this.setData({
           songsTypes: playlists
         })
@@ -52,5 +54,10 @@ Page({
   },
   onShow(){
     this.initData()
+    if(app.globalData.diskShow){
+      this.setData({
+        diskShow: true
+      })
+    }
   }
 })

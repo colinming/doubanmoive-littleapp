@@ -1,0 +1,3 @@
+<view class="{{diskShow===true?'play-ico-show':'play-ico'}}" bind:tap="tapDisk">
+	<image class="disk-ico" src="../../pages/static/images/disk.png" mode="scaleToFill"></image>
+</view>

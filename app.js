@@ -32,11 +32,17 @@ App({
         }
       }
     })
+
+  },
+  onShow(){
+    console.log(wx.getBackgroundAudioManager())
   },
   globalData: {
     userInfo: null,
 
+    currentIndex: 0, // 当前播放歌曲索引
     song: null,
-    songList: [] // 歌曲列表
+    songList: [], // 歌曲列表
+    diskShow: false
   } 
 })

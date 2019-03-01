@@ -66,6 +66,7 @@ page{
   bottom: 32rpx;
   left: 0;
   right: 0;
+  z-index: 500;
 }
 .time-range{
   margin: 0 32rpx 30rpx;
@@ -108,7 +109,7 @@ page{
 .list-wrapper{ /*列表高度*/ 
   height: 560rpx;
   background-color: #d3d7d4;
-  color:: #333;
+  color: #333;
 }
 .list-header{
   height: 80rpx;
@@ -123,7 +124,6 @@ page{
   font-size: 12px;
 }
 .song-wrapper{
-  height: 60rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -164,4 +164,32 @@ page{
 }
 .list-footer:after{
   border: none;
+}
+
+.order-show{
+  display: block;
+  position: absolute;
+  bottom: 110rpx;
+  left: 32rpx;
+  z-index: 1200;
+  background-color: #f6f5ec;
+  border-radius: 5rpx;
+}
+.order-hide{
+  display: none;
+}
+.order-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx;
+}
+.order-ico{
+  width: 36rpx;
+  height: 36rpx;
+  margin-bottom: 10rpx;
+}
+.order-ico:last-child{
+  margin-bottom: 0;
 }

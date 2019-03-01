@@ -1,11 +1,12 @@
 <!--index.wxml-->
 <view class="music-list">
+  <play-ico></play-ico>
  	<view class="list-header">
- 		<text class="title">{{ songList.name }}</text>
+ 		<text class="title">{{ songList.songListName }}</text>
  		<view class="des-wrapper">
- 			<image src="{{songList.coverImgUrl}}" class="list-cover"></image>
+ 			<image src="{{songList.songListPic}}" class="list-cover"></image>
  			<view class="des-right">
- 				<view class="des">{{songList.description}}</view>
+ 				<view class="des">{{songList.songListDescription}}</view>
  				<view class="tag-wrapper">
  					<text class="tag-name">标签：</text>
  					<view class="tag" wx:for="{{songList.tags}}" wx:key="{{index}}">
@@ -18,16 +19,16 @@
 
  	<view class="list-wrapper">
  		<view class="song-title">歌曲列表</view>
- 		<view wx:for="{{songList.tracks}}" wx:key="{{index}}">
- 			<navigator url="../musicplay/musicplay?index={{index}}" open-type="navigate" class="list-content">
+ 		<view wx:for="{{songList.songs}}" wx:key="{{index}}">
+ 			<navigator url="../musicplay/musicplay?currentIndex={{index}}" open-type="navigate" class="list-content">
  				<view class="song-detail">
 	 				<text class="song-name">{{item.name}}</text>
-	 				<text class="song-art">{{item.ar[0].name}}</text>
+	 				<text class="song-art">{{item.singer}}</text>
 	 			</view>
 	 			<image class="play-ico" src="../static/images/play.png" mode="scaleToFill"></image>
  			</navigator>
  		</view>
- 		<navigator class="play-all" url="../musicplay/musicplay?index=0" open-type="navigate">播放全部</navigator>
+ 		<navigator class="play-all" url="../musicplay/musicplay?currentIndex=0" open-type="navigate">播放全部</navigator>
  	</view>
 </view> 
 

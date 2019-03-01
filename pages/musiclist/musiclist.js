@@ -10,15 +10,15 @@ Page({
   initData(){ // 初始化数据
     http.songList(this.data.id)
     .then(res => {
-    	// console.log(res.data.playlist)
+    	// console.log(res.data)
     	this.setData({
-    		songList: res.data.playlist
+    		songList: res.data.data
     	})
-      app.globalData.songList = res.data.playlist.tracks
+      app.globalData.songList = res.data.data.songs
     })
   },
   playAll(){ // 点击播放全部按钮
-  	let {id} = this.data.songList.tracks[0]
+  	let {id} = this.data.songList.songs[0]
   	wx.navigateTo({
   		url: `../musicplay/musicplay?id=${id}`
   	})

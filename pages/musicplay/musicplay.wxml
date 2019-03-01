@@ -1,15 +1,15 @@
 <wxs module="m">
   var formatS = function(time){
     var m = 0, s = 0
-    m = time/60>9?parseInt(time/60):'0' + parseInt(time/60)
-    s = time%60>9?parseInt(time%60):'0' + parseInt(time%60)
+    m = time/60>10?parseInt(time/60):'0' + parseInt(time/60)
+    s = time%60>10?parseInt(time%60):'0' + parseInt(time%60)
     
     return m+':'+s
   }
   var formatMs = function(time){
     var t = time/1000, m = 0, s = 0
-    m = t/60>9?parseInt(t/60):'0' + parseInt(t/60)
-    s = t%60>9?parseInt(t%60):'0' + parseInt(t%60)
+    m = t/60>10?parseInt(t/60):'0' + parseInt(t/60)
+    s = t%60>10?parseInt(t%60):'0' + parseInt(t%60)
     
     return m+':'+s
   }
@@ -19,9 +19,9 @@
 
 <view class="music-play">
   <view class="song-header">
-    <text class="play-name">{{songDetail.name}} - {{songDetail.ar[0].name}}</text>
+    <text class="play-name">{{songDetail.name}} - {{songDetail.singer}}</text>
   </view>
-  <image class="song-cover {{ifPlay === true?'song-rotate':''}}" src="{{songDetail.al.picUrl}}" mode="scaleToFill"></image>
+  <image class="song-cover {{ifPlay === true?'song-rotate':''}}" src="{{songDetail.pic}}" mode="scaleToFill"></image>
 
   <!-- 歌词显示区域 -->
   <scroll-view class="lrc-wrapper" scroll-y scroll-into-view="{{currentLrc}}" scroll-with-animation="true">
@@ -36,7 +36,7 @@
       <text class="duration">{{m.formatS(duration)}}</text>
     </view>
     <view class="play-operate">
-      <image class="play-order" src="../static/images/order.png" mode="scaleToFill" bindtap="orderTap"></image>
+      <image class="play-order" src="{{orders[orderIndex]}}" mode="scaleToFill" bindtap="orderTap"></image>
       <view class="play-contrl">
         <image class="play-ico" src="../static/images/pre-song.png" mode="scaleToFill" bindtap="preSong"></image>
         <image class="play-ico" wx:if="{{ifPlay === true}}" src="../static/images/pause.png" mode="scaleToFill" bindtap="pauseSong"></image>
@@ -50,11 +50,11 @@
 
 
 
-  <modal hidden="true" title="播放顺序">
-    <view class="">
-      <image class="" src="../static/images/order.png" mode="scaleToFill"></image>
+  <dialog class="{{orderShow === true?'order-show':'order-hide'}}">
+    <view class="order-wrapper">
+      <image class="order-ico" wx:for="{{orders}}" wx:key="{{index}}" src="{{item}}" mode="scaleToFill" bind:tap="selectOrder" data-order-index="{{index}}"></image>
     </view>
-  </modal> 
+  </dialog> 
 
   <action-sheet hidden="{{!listShow}}">
     <view class="list-wrapper">
@@ -66,13 +66,13 @@
           <view class="song-wrapper" bind:tap="selectSong" data-current-index="{{index}}">
             <view class="song-left">
               <text class="song-num" wx:if="{{currentIndex !== index}}">{{index+1}}</text>
-              <image class="min-cover" wx:else src="{{item.al.picUrl}}"></image>
+              <image class="min-cover" wx:else src="{{item.pic}}"></image>
               <view class="song-detail {{currentIndex === index?'current-song':''}}">
                 <text class="song-name">{{item.name}}</text>
-                <text class="song-art">{{item.ar[0].name}}</text>
+                <text class="song-art">{{item.singer}}</text>
               </view>
             </view>
-            <text class="song-time">{{m.formatMs(item.dt)}}</text>
+            <text class="song-time">{{m.formatS(item.time)}}</text>
           </view>
         </block>
       </scroll-view>

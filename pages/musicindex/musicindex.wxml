@@ -1,5 +1,6 @@
 <!--index.wxml-->
 <view class="music-index">
+  <play-ico diskShow="{{diskShow}}"></play-ico>
   <view class="tab-header">
     <view wx:for="{{tabbar}}" wx:key="{{index}}" class="tab-title">
       <text class="tab-words {{currentIndex === index?'is-active':''}}" bindtap="selectType" data-index="{{index}}">{{item.title}}</text>
@@ -16,7 +17,7 @@
             <view wx:for="{{songsTypes}}" wx:key="{{index}}" class="songs-detail">
               <navigator url="../musiclist/musiclist?id={{item.id}}" class="songs-link">
                 <image src="{{item.coverImgUrl}}" class="songs-cover"></image>
-                <text class="songs-des">{{item.name}}</text>
+                <text class="songs-des">{{item.title}}</text>
               </navigator>
             </view>
           </block>

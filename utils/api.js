@@ -1,8 +1,7 @@
-let baseUrl = 'http://localhost:3000'
 const http = function(method, url, data) {
   return new Promise(function(resolve, reject) {
     wx.request({
-      url: `${baseUrl}${url}`,
+      url,
       data,
       method,
       header: {
@@ -20,21 +19,26 @@ const http = function(method, url, data) {
 }
 export default {
 	songTypes(limit){ // 精品歌单
-		return http('get', '/top/playlist/highquality', {limit})
+		return http('get', 'https://api.bzqll.com/music/netease/highQualitySongList', {key: 579621905, limit})
 	},
 	songList(id){ // 歌单详情
-		return http('get', '/playlist/detail', {id})
-	},
-	songUrl(id){ // 歌曲 url
-		return http('get', '/song/url', {id})
+		return http('get', 'https://api.bzqll.com/music/netease/songList', {key: 579621905, id})
 	},
 	songLrc(id){ // 歌词
-		return http('get', '/lyric', {id})
+		return http('get', 'https://api.bzqll.com/music/netease/lrc', {key: 579621905, id})
 	},
-	songDetail(ids){ // 歌曲详情
-		return http('get', '/song/detail', {ids})
+	songDetail(id){ // 歌曲详情
+		return http('get', 'https://api.bzqll.com/music/netease/song', {key: 579621905, id})
 	},
-	songComments(id){ // 歌曲评论
-		return http('get', '/comment/music', {id})
+
+
+	mvList(params){ // mv 列表
+		return http('get', 'https://u.y.qq.com/cgi-bin/musicu.fcg', params)
+	},
+	mvDetail(params){ // mv 详情
+		return http('get', 'https://u.y.qq.com/cgi-bin/musicu.fcg', params)
+	},
+	mvUrl(params){ // mv 地址
+		return http('get', 'https://u.y.qq.com/cgi-bin/musicu.fcg', params)
 	}
 }
