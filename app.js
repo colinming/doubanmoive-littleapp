@@ -35,7 +35,6 @@ App({
 
   },
   onShow(){
-    console.log(wx.getBackgroundAudioManager())
   },
   globalData: {
     userInfo: null,
