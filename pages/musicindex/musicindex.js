@@ -14,7 +14,11 @@ Page({
     ],
     currentIndex: 0,
     songsTypes: [], // 榜单
-    clientHeight: 0
+    clientHeight: 0,
+
+
+    timeStr: ''
+
   },
   initData(){ // 初始化数据
     http.songTypes(24)
@@ -53,6 +57,12 @@ Page({
     })
   },
   onShow(){
+    let str = '2018/12/13 12:23:10'
+
+    this.setData({
+      timeStr: str.replace(/\//g, '-')
+    })
+
     this.initData()
     if(app.globalData.diskShow){
       this.setData({
